@@ -1,4 +1,4 @@
-import { Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 import find from 'lodash-es/find';
 import includes from 'lodash-es/includes';
 import { Observable } from 'rxjs/Observable';
@@ -26,7 +26,7 @@ export class JsonApiModel {
     }
   }
 
-  save(params?: any, headers?: Headers): Observable<this> {
+  save(params?: any, headers?: HttpHeaders): Observable<this> {
     const attributesMetadata: any = this[AttributeMetadata];
     return this._datastore.saveRecord(attributesMetadata, this, params, headers);
   }
@@ -198,10 +198,10 @@ export class JsonApiModel {
       _.extend(peek, data.attributes);
       return peek;
     }
-    
+
     const newObject: T = new modelType(this._datastore, data);
     this._datastore.addToStore(newObject);
-    
+
     return newObject;
   }
 }
