@@ -12,12 +12,12 @@ import { ModelConfig } from '../index';
 import {
   BaseRequestOptions,
   ConnectionBackend,
-  Headers,
   Http,
   RequestMethod,
   Response,
   ResponseOptions
 } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
 import {
   API_VERSION_FROM_CONFIG,
   BASE_URL_FROM_CONFIG,
@@ -135,7 +135,7 @@ describe('JsonApiDatastore', () => {
         expect(c.request.headers.get('Authorization')).toBe('Bearer');
       });
 
-      datastore.query(Author, null, new Headers({ Authorization: 'Bearer' })).subscribe();
+      datastore.query(Author, null, new HttpHeaders({ Authorization: 'Bearer' })).subscribe();
     });
 
     it('should override base headers', () => {
@@ -145,8 +145,8 @@ describe('JsonApiDatastore', () => {
         expect(c.request.headers.has('Authorization')).toBeTruthy();
         expect(c.request.headers.get('Authorization')).toBe('Basic');
       });
-      datastore.headers = new Headers({ Authorization: 'Bearer' });
-      datastore.query(Author, null, new Headers({ Authorization: 'Basic' })).subscribe();
+      datastore.headers = new HttpHeaders({ Authorization: 'Bearer' });
+      datastore.query(Author, null, new HttpHeaders({ Authorization: 'Basic' })).subscribe();
     });
 
     it('should get authors', () => {

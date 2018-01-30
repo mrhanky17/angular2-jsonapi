@@ -53,7 +53,7 @@ export class JsonApiDatastore {
   ): Observable<T[]> {
     const headersNew: HttpHeaders = this.getHeaders(headers);
     const url: string = this.buildUrl(modelType, params, undefined, customUrl);
-    return this.http.get(url, {headers: headersNew})
+    return this.http.get(url, { headers: headersNew })
       .map((res: any) => this.extractQueryData(res, modelType))
       .catch((res: any) => this.handleError(res));
   }
@@ -67,7 +67,7 @@ export class JsonApiDatastore {
     const headersNew: HttpHeaders = this.getHeaders(headers);
     const url: string = this.buildUrl(modelType, params, undefined, customUrl);
 
-    return this.http.get(url, {headers: headersNew})
+    return this.http.get(url, { headers: headersNew })
       .map((res: any) => this.extractQueryData(res, modelType, true))
       .catch((res: any) => this.handleError(res));
   }
@@ -82,7 +82,7 @@ export class JsonApiDatastore {
     const headersNew: HttpHeaders = this.getHeaders(headers);
     const url: string = this.buildUrl(modelType, params, id, customUrl);
 
-    return this.http.get(url, {headers: headersNew})
+    return this.http.get(url, { headers: headersNew })
       .map((res: any) => this.extractRecordData(res, modelType))
       .catch((res: any) => this.handleError(res));
   }
@@ -132,9 +132,9 @@ export class JsonApiDatastore {
     };
 
     if (model.id) {
-      httpCall = this.http.patch(url, body, {headers: headersNew});
+      httpCall = this.http.patch(url, body, { headers: headersNew });
     } else {
-      httpCall = this.http.post(url, body, {headers: headersNew});
+      httpCall = this.http.post(url, body, { headers: headersNew });
     }
 
     return httpCall
@@ -161,7 +161,8 @@ export class JsonApiDatastore {
     const headersNew: HttpHeaders = this.getHeaders(headers);
     const url: string = this.buildUrl(modelType, null, id, customUrl);
 
-    return this.http.delete(url, {headers: headersNew}).catch((res: any) => this.handleError(res));
+    return this.http.delete(url, { headers: headersNew })
+      .catch((res: any) => this.handleError(res));
   }
 
   peekRecord<T extends JsonApiModel>(modelType: ModelType<T>, id: string): T | null {
@@ -332,11 +333,11 @@ export class JsonApiDatastore {
   protected getHeaders(customHeaders?: HttpHeaders): HttpHeaders {
     let requestHeaders = new HttpHeaders({
       'Content-Type': 'application/vnd.api+json',
-      'Accept': 'application/vnd.api+json',
+      Accept: 'application/vnd.api+json',
     });
 
     if (this._headers) {
-      for (let key of this._headers.keys()) {
+      for (const key of this._headers.keys()) {
         if (key !== undefined) {
           // TODO: fix .get(key) || []
           requestHeaders = requestHeaders.set(key, this._headers.get(key) || []);
@@ -345,7 +346,7 @@ export class JsonApiDatastore {
     }
 
     if (customHeaders) {
-      for (let key of customHeaders.keys()) {
+      for (const key of customHeaders.keys()) {
         if (key !== undefined) {
           // TODO: fix .get(key) || []
           requestHeaders = requestHeaders.set(key, customHeaders.get(key) || []);
